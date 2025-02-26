@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+
+T1/model/
+T1/dif_blocks/
+T1/code/
+T1/ui/
+T1/T1_files/
+*.html
