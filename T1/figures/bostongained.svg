@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1079 465">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: .8;
+        stroke: #e1e1e1;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        isolation: isolate;
+      }
+
+      .cls-1, .cls-5, .cls-6, .cls-7 {
+        fill: none;
+      }
+
+      .cls-8 {
+        clip-path: url(#clippath-4);
+      }
+
+      .cls-2 {
+        font-size: 10px;
+      }
+
+      .cls-2, .cls-3 {
+        font-family: TimesNewRomanPSMT, 'Times New Roman';
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        fill: #444;
+      }
+
+      .cls-9 {
+        fill: #fff;
+      }
+
+      .cls-10 {
+        clip-path: url(#clippath-5);
+      }
+
+      .cls-11 {
+        clip-path: url(#clippath-3);
+      }
+
+      .cls-12 {
+        fill-opacity: 0;
+      }
+
+      .cls-6 {
+        stroke-opacity: 0;
+      }
+
+      .cls-6, .cls-7 {
+        stroke: #9c9c9c;
+      }
+
+      .cls-3, .cls-13 {
+        font-size: 12px;
+      }
+
+      .cls-14 {
+        fill: #a6cee3;
+        fill-opacity: .7;
+        stroke: #a6cee3;
+      }
+
+      .cls-13 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+      }
+
+      .cls-15 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-4 {
+        font-family: TimesNewRomanPS-BoldMT, 'Times New Roman';
+        font-size: 16px;
+        font-weight: 700;
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-5" x="-1" y="-1" width="1076" height="459"/>
+    </clipPath>
+    <clipPath id="clippath-3">
+      <rect class="cls-5" x="-1" y="-1" width="1076" height="459"/>
+    </clipPath>
+    <clipPath id="clippath-4">
+      <rect class="cls-5" x="-1" y="-1" width="1076" height="459"/>
+    </clipPath>
+    <clipPath id="clippath-5">
+      <rect class="cls-5" x="57.6" y="44" width="1013.8" height="362"/>
+    </clipPath>
+    <clipPath id="clippath-6">
+      <rect class="cls-5" x="57.6" y="44" width="1013.8" height="362"/>
+    </clipPath>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.5, SVG Export Plug-In . SVG Version: 1.2.0 Build 176)  -->
+  <g>
+    <g id="Layer_1">
+      <rect id="backgroundRect" class="cls-9" width="1079" height="465"/>
+      <g class="cls-15">
+        <text class="cls-4" transform="translate(323.4 23)"><tspan x="0" y="0">Frequency of Vehicles Gained at the Household Level in Boston</tspan></text>
+      </g>
+      <rect class="cls-12" x="58.6" y="45" width="1011.8" height="360"/>
+      <g class="cls-11">
+        <g>
+          <text class="cls-2" transform="translate(223.6 428)"><tspan x="0" y="0">0</tspan></text>
+          <line class="cls-7" x1="227.2" y1="405" x2="227.2" y2="409"/>
+          <text class="cls-2" transform="translate(560.9 428)"><tspan x="0" y="0">1</tspan></text>
+          <line class="cls-7" x1="564.5" y1="405" x2="564.5" y2="409"/>
+          <text class="cls-2" transform="translate(898.2 428)"><tspan x="0" y="0">2</tspan></text>
+          <line class="cls-7" x1="901.8" y1="405" x2="901.8" y2="409"/>
+          <line class="cls-7" x1="58.6" y1="405" x2="1070.4" y2="405"/>
+          <text class="cls-3" transform="translate(536.1 453)"><tspan x="0" y="0">Vehicles Gained</tspan></text>
+        </g>
+        <text class="cls-13" transform="translate(-112 -105)"><tspan x="0" y="0">Lorem ipsum</tspan></text>
+      </g>
+      <g class="cls-8">
+        <g>
+          <text class="cls-2" transform="translate(38.4 410.5)"><tspan x="0" y="0">0</tspan></text>
+          <line class="cls-1" x1="58.6" y1="365" x2="1070.4" y2="365"/>
+          <text class="cls-2" transform="translate(31.2 370.5)"><tspan x="0" y="0">20</tspan></text>
+          <line class="cls-1" x1="58.6" y1="325" x2="1070.4" y2="325"/>
+          <text class="cls-2" transform="translate(30.2 330.5)"><tspan x="0" y="0">40</tspan></text>
+          <line class="cls-1" x1="58.6" y1="285" x2="1070.4" y2="285"/>
+          <text class="cls-2" transform="translate(31.2 290.5)"><tspan x="0" y="0">60</tspan></text>
+          <line class="cls-1" x1="58.6" y1="245" x2="1070.4" y2="245"/>
+          <text class="cls-2" transform="translate(31.2 250.5)"><tspan x="0" y="0">80</tspan></text>
+          <line class="cls-1" x1="58.6" y1="205" x2="1070.4" y2="205"/>
+          <text class="cls-2" transform="translate(24 210.5)"><tspan x="0" y="0">100</tspan></text>
+          <line class="cls-1" x1="58.6" y1="165" x2="1070.4" y2="165"/>
+          <text class="cls-2" transform="translate(24 170.5)"><tspan x="0" y="0">120</tspan></text>
+          <line class="cls-1" x1="58.6" y1="125" x2="1070.4" y2="125"/>
+          <text class="cls-2" transform="translate(24 130.5)"><tspan x="0" y="0">140</tspan></text>
+          <line class="cls-1" x1="58.6" y1="85" x2="1070.4" y2="85"/>
+          <text class="cls-2" transform="translate(24 90.5)"><tspan x="0" y="0">160</tspan></text>
+          <line class="cls-1" x1="58.6" y1="45" x2="1070.4" y2="45"/>
+          <text class="cls-2" transform="translate(24 50.5)"><tspan x="0" y="0">180</tspan></text>
+          <text class="cls-3" transform="translate(17 246.7) rotate(-90)"><tspan x="0" y="0">Number of Households</tspan></text>
+          <line class="cls-6" x1="58.6" y1="45" x2="58.6" y2="405"/>
+        </g>
+      </g>
+      <g class="cls-10">
+        <g>
+          <rect class="cls-14" x="109.2" y="45" width="236.1" height="360"/>
+          <rect class="cls-14" x="446.4" y="293" width="236.1" height="112"/>
+          <rect class="cls-14" x="783.7" y="401" width="236.1" height="4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
