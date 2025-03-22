@@ -12,4 +12,4 @@ The script to the both the base and alternative scenarios is in T1_models.R.
 
 ### T2
 Comparing trip generation scenarios throughout the Boston region by identifying changes in trip productions and attractions due to the alternative scenario. 
-The script to the both the base and alternative scenarios is in T2.R.
+The script is in T2.R.
