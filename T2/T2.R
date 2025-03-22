@@ -66,17 +66,33 @@ alt_block_prod <- alt_trip_prod |>
 ##########################################
 # Set tolerance level, filter data by tolerance
 
-tolerance <- 0.05
+tolerance_small <- 0.05
+tolerance_med <- 0.5
+tolerance_bigboy <- 1
 
 compare_prod <- full_join(base_block_prod, alt_block_prod) |>
   mutate(dif_hbw_p = (hbw_p_alt - hbw_p)/hbw_p,
          dif_hbsc_p = (hbsc_p_alt - hbsc_p)/hbsc_p,
          dif_hbsr_p = (hbsr_p_alt - hbsr_p)/hbsr_p,
-         dif_hbpb_p = (hbpb_p_alt - hbpb_p)/hbpb_p) |>
-  filter(abs(dif_hbw_p) > tolerance |
-           abs(dif_hbsc_p) > tolerance |
-           abs(dif_hbsr_p) > tolerance |
-           abs(dif_hbpb_p) > tolerance)
+         dif_hbpb_p = (hbpb_p_alt - hbpb_p)/hbpb_p)
+
+compare_prod_filtered_small <- compare_prod |>
+  filter(abs(dif_hbw_p) > tolerance_small |
+           abs(dif_hbsc_p) > tolerance_small |
+           abs(dif_hbsr_p) > tolerance_small |
+           abs(dif_hbpb_p) > tolerance_small)
+
+compare_prod_filtered_med <- compare_prod |>
+  filter(abs(dif_hbw_p) > tolerance_med |
+           abs(dif_hbsc_p) > tolerance_med |
+           abs(dif_hbsr_p) > tolerance_med |
+           abs(dif_hbpb_p) > tolerance_med)
+
+compare_prod_filtered_bigboy <- compare_prod |>
+  filter(abs(dif_hbw_p) > tolerance_bigboy |
+           abs(dif_hbsc_p) > tolerance_bigboy |
+           abs(dif_hbsr_p) > tolerance_bigboy |
+           abs(dif_hbpb_p) > tolerance_bigboy)
 
 ##########################################
 # Create map showing differences in home-based trip productions
@@ -157,40 +173,61 @@ compare_attr <- full_join(base_trip_attr, alt_trip_attr) |>
          diff_hbsc_a = (alt_hbsc_a - hbsc_a)/hbsc_a,
          diff_hbpb_a = (alt_hbpb_a - hbpb_a)/hbpb_a,
          diff_nhbw_a = (alt_nhbw_a - nhbw_a)/nhbw_a,
-         diff_nhbnw_a = (alt_nhbnw_a - nhbnw_a)/nhbnw_a) |>
-  filter(abs(diff_hbw_inc1_a) > tolerance |
-           abs(diff_hbw_inc2_a) > tolerance |
-           abs(diff_hbw_inc3_a) > tolerance |
-           abs(diff_hbw_inc4_a) > tolerance |
-           abs(diff_hbsc_a) > tolerance |
-           abs(diff_hbsr_a) > tolerance |
-           abs(diff_hbpb_a) > tolerance |
-           abs(diff_nhbw_a) > tolerance |
-           abs(diff_nhbnw_a) > tolerance)
+         diff_nhbnw_a = (alt_nhbnw_a - nhbnw_a)/nhbnw_a)
+
+compare_attr_filtered_small <- compare_attr |>
+  filter(abs(diff_hbw_inc1_a) >= tolerance_small |
+           abs(diff_hbw_inc2_a) >= tolerance_small |
+           abs(diff_hbw_inc3_a) >= tolerance_small |
+           abs(diff_hbw_inc4_a) >= tolerance_small |
+           abs(diff_hbsc_a) >= tolerance_small |
+           abs(diff_hbsr_a) >= tolerance_small |
+           abs(diff_hbpb_a) >= tolerance_small |
+           abs(diff_nhbw_a) >= tolerance_small |
+           abs(diff_nhbnw_a) >= tolerance_small)
+
+compare_attr_filtered_med <- compare_attr |>
+  filter(abs(diff_hbw_inc1_a) >= tolerance_med |
+           abs(diff_hbw_inc2_a) >= tolerance_med |
+           abs(diff_hbw_inc3_a) >= tolerance_med |
+           abs(diff_hbw_inc4_a) >= tolerance_med |
+           abs(diff_hbsc_a) >= tolerance_med |
+           abs(diff_hbsr_a) >= tolerance_med |
+           abs(diff_hbpb_a) >= tolerance_med |
+           abs(diff_nhbw_a) >= tolerance_med |
+           abs(diff_nhbnw_a) >= tolerance_med)
+
+compare_attr_filtered_bigboy <- compare_attr |>
+  filter(abs(diff_hbw_inc1_a) >= tolerance_bigboy |
+           abs(diff_hbw_inc2_a) >= tolerance_bigboy |
+           abs(diff_hbw_inc3_a) >= tolerance_bigboy |
+           abs(diff_hbw_inc4_a) >= tolerance_bigboy |
+           abs(diff_hbsc_a) >= tolerance_bigboy |
+           abs(diff_hbsr_a) >= tolerance_bigboy |
+           abs(diff_hbpb_a) >= tolerance_bigboy |
+           abs(diff_nhbw_a) >= tolerance_bigboy |
+           abs(diff_nhbnw_a) >= tolerance_bigboy)
 
 ##########################################
 # Create map showing differences in trip attractions
 
-dif_blocks_attr <- zones |>
-  right_join(compare_attr) 
-
-attr_labels <- paste0(formatC(dif_blocks_attr$diff_hbw_inc1_a, format = "f", digits = 2),
+attr_labels <- paste0(formatC(dif_blocks_attr$diff_hbw_inc1_a*100, format = "f", digits = 2),
                       "% change in HBW trips (< $35k)<br/>",
-                      formatC(dif_blocks_attr$diff_hbw_inc2_a, format = "f", digits = 2),
+                      formatC(dif_blocks_attr$diff_hbw_inc2_a*100, format = "f", digits = 2),
                       "% change in HBW trips ($35k - $65k)<br/>",
-                      formatC(dif_blocks_attr$diff_hbw_inc3_a, format = "f", digits = 2),
+                      formatC(dif_blocks_attr$diff_hbw_inc3_a*100, format = "f", digits = 2),
                       "% change in HBW trips ($65k - $100k)<br/>",
-                      formatC(dif_blocks_attr$diff_hbw_inc4_a, format = "f", digits = 2),
+                      formatC(dif_blocks_attr$diff_hbw_inc4_a*100, format = "f", digits = 2),
                       "% change in HBW trips (> $100k)<br/>",
-                      formatC(dif_blocks_attr$diff_hbsc_a, format = "f", digits = 2), 
+                      formatC(dif_blocks_attr$diff_hbsc_a*100, format = "f", digits = 2), 
                       "% change in HB-school trips<br/>",
-                      formatC(dif_blocks_attr$diff_hbsr_a, format = "f", digits = 2),
+                      formatC(dif_blocks_attr$diff_hbsr_a*100, format = "f", digits = 2),
                       "% change in HB-soc/rec trips<br/>",
-                      formatC(dif_blocks_attr$diff_hbpb_a, format = "f", digits = 2),
+                      formatC(dif_blocks_attr$diff_hbpb_a*100, format = "f", digits = 2),
                       "% change in HB-per-bus<br/>",
-                      formatC(dif_blocks_attr$diff_nhbw_a, format = "f", digits = 2),
+                      formatC(dif_blocks_attr$diff_nhbw_a*100, format = "f", digits = 2),
                       "% non-home-based work trips<br/>",
-                      formatC(dif_blocks_attr$diff_nhbnw_a, format = "f", digits = 2),
+                      formatC(dif_blocks_attr$diff_nhbnw_a*100, format = "f", digits = 2),
                       "% change in non-home-based non-work trips") |>
   lapply(htmltools::HTML)
 
@@ -231,9 +268,19 @@ dbDisconnect(alt_db)
 
 compare_nhb <- full_join(base_trip_nhb, alt_trip_nhb) |>
   mutate(diff_nhbw_p = (alt_nhbw_p - nhbw_p)/nhbw_p,
-         diff_nhbnw_p = (alt_nhbnw_p - nhbnw_p)/nhbnw_p) |>
-  filter(abs(diff_nhbw_p) > tolerance |
-           abs(diff_nhbnw_p) > tolerance)
+         diff_nhbnw_p = (alt_nhbnw_p - nhbnw_p)/nhbnw_p)
+
+compare_nhb_filtered_small <- compare_nhb |>
+  filter(abs(diff_nhbw_p) >= tolerance_small |
+           abs(diff_nhbnw_p) >= tolerance_small)
+
+compare_nhb_filtered_med <- compare_nhb |>
+  filter(abs(diff_nhbw_p) >= tolerance_med |
+           abs(diff_nhbnw_p) >= tolerance_med)
+
+compare_nhb_filtered_bigboy <- compare_nhb |>
+  filter(abs(diff_nhbw_p) >= tolerance_bigboy |
+           abs(diff_nhbnw_p) >= tolerance_bigboy)
 
 ##########################################
 # Create map showing differences in non-home-based trip productions
@@ -241,9 +288,9 @@ compare_nhb <- full_join(base_trip_nhb, alt_trip_nhb) |>
 dif_blocks_nhb <- zones |>
   right_join(compare_nhb) 
 
-nhb_labels <- paste0(formatC(dif_blocks_nhb$diff_nhbw_p, format = "f", digits = 2),
+nhb_labels <- paste0(formatC(dif_blocks_nhb$diff_nhbw_p*100, format = "f", digits = 2),
                      " non-home-based work trips<br/>",
-                     formatC(dif_blocks_nhb$diff_nhbnw_p, format = "f", digits = 2),
+                     formatC(dif_blocks_nhb$diff_nhbnw_p*100, format = "f", digits = 2),
                      "% change in non-home-based non-work trips") |>
   lapply(htmltools::HTML)
 
