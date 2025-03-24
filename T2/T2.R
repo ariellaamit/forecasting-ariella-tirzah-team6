@@ -77,22 +77,22 @@ compare_prod <- full_join(base_block_prod, alt_block_prod) |>
          dif_hbpb_p = (hbpb_p_alt - hbpb_p)/hbpb_p)
 
 compare_prod_filtered_small <- compare_prod |>
-  filter(abs(dif_hbw_p) > tolerance_small |
-           abs(dif_hbsc_p) > tolerance_small |
-           abs(dif_hbsr_p) > tolerance_small |
-           abs(dif_hbpb_p) > tolerance_small)
+  filter(abs(dif_hbw_p) >= tolerance_small |
+           abs(dif_hbsc_p) >= tolerance_small |
+           abs(dif_hbsr_p) >= tolerance_small |
+           abs(dif_hbpb_p) >= tolerance_small)
 
 compare_prod_filtered_med <- compare_prod |>
-  filter(abs(dif_hbw_p) > tolerance_med |
-           abs(dif_hbsc_p) > tolerance_med |
-           abs(dif_hbsr_p) > tolerance_med |
-           abs(dif_hbpb_p) > tolerance_med)
+  filter(abs(dif_hbw_p) >= tolerance_med |
+           abs(dif_hbsc_p) >= tolerance_med |
+           abs(dif_hbsr_p) >= tolerance_med |
+           abs(dif_hbpb_p) >= tolerance_med)
 
 compare_prod_filtered_bigboy <- compare_prod |>
-  filter(abs(dif_hbw_p) > tolerance_bigboy |
-           abs(dif_hbsc_p) > tolerance_bigboy |
-           abs(dif_hbsr_p) > tolerance_bigboy |
-           abs(dif_hbpb_p) > tolerance_bigboy)
+  filter(abs(dif_hbw_p) >= tolerance_bigboy |
+           abs(dif_hbsc_p) >= tolerance_bigboy |
+           abs(dif_hbsr_p) >= tolerance_bigboy |
+           abs(dif_hbpb_p) >= tolerance_bigboy)
 
 ##########################################
 # Create map showing differences in home-based trip productions
@@ -104,11 +104,7 @@ ma_blocks <- blocks(state = "MA",
   rename(block_id = GEOID10) |>
   select(block_id)
 
-TAZs <- here("model",
-             "inputs",
-             "zonal",
-             "shp",
-             "CTPS_TDM23_TAZ_2017g_v202303.shp") |>
+TAZs <- here("C:/model/inputs/zonal/shp/CTPS_TDM23_TAZ_2017g_v202303.shp") |>
   st_read(quiet = TRUE) |>
   st_transform("WGS84") |>
   mutate(block_id = as.character(taz_id)) |>
@@ -138,6 +134,15 @@ leaflet(dif_blocks_prod) |>
               highlightOptions = highlightOptions(weight = 3,
                                                   fillOpacity = 0.5),
               label = hb_prod_labels)
+
+dif_blocks_prod_small <- zones |>
+  right_join(compare_prod_filtered_small)
+
+dif_blocks_prod_med <- zones |>
+  right_join(compare_prod_filtered_med)
+
+dif_blocks_prod_bigboy <- zones |>
+  right_join(compare_prod_filtered_bigboy)
 
 ##########################################
 # Look at base scenario for trip attractions
@@ -186,6 +191,28 @@ compare_attr_filtered_small <- compare_attr |>
            abs(diff_nhbw_a) >= tolerance_small |
            abs(diff_nhbnw_a) >= tolerance_small)
 
+compare_attr_filtered_small_pos <- compare_attr |>
+  filter(diff_hbw_inc1_a >= tolerance_small |
+           diff_hbw_inc2_a >= tolerance_small |
+           diff_hbw_inc3_a >= tolerance_small |
+           diff_hbw_inc4_a >= tolerance_small |
+           diff_hbsc_a >= tolerance_small |
+           diff_hbsr_a >= tolerance_small |
+           diff_hbpb_a >= tolerance_small |
+           diff_nhbw_a >= tolerance_small |
+           diff_nhbnw_a >= tolerance_small)
+
+compare_attr_filtered_small_neg <- compare_attr |>
+  filter(diff_hbw_inc1_a >= (tolerance_small)*-1 |
+           diff_hbw_inc2_a >= (tolerance_small)*-1 |
+           diff_hbw_inc3_a >= (tolerance_small)*-1 |
+           diff_hbw_inc4_a >= (tolerance_small)*-1 |
+           diff_hbsc_a >= (tolerance_small)*-1 |
+           diff_hbsr_a >= (tolerance_small)*-1 |
+           diff_hbpb_a >= (tolerance_small)*-1 |
+           diff_nhbw_a >= (tolerance_small)*-1 |
+           diff_nhbnw_a >= (tolerance_small)*-1)
+
 compare_attr_filtered_med <- compare_attr |>
   filter(abs(diff_hbw_inc1_a) >= tolerance_med |
            abs(diff_hbw_inc2_a) >= tolerance_med |
@@ -196,6 +223,28 @@ compare_attr_filtered_med <- compare_attr |>
            abs(diff_hbpb_a) >= tolerance_med |
            abs(diff_nhbw_a) >= tolerance_med |
            abs(diff_nhbnw_a) >= tolerance_med)
+
+compare_attr_filtered_med_pos <- compare_attr |>
+  filter(diff_hbw_inc1_a >= tolerance_med |
+           diff_hbw_inc2_a >= tolerance_med |
+           diff_hbw_inc3_a >= tolerance_med |
+           diff_hbw_inc4_a >= tolerance_med |
+           diff_hbsc_a >= tolerance_med |
+           diff_hbsr_a >= tolerance_med |
+           diff_hbpb_a >= tolerance_med |
+           diff_nhbw_a >= tolerance_med |
+           diff_nhbnw_a >= tolerance_med)
+
+compare_attr_filtered_med_neg <- compare_attr |>
+  filter(diff_hbw_inc1_a >= (tolerance_med)*-1 |
+           diff_hbw_inc2_a >= (tolerance_med)*-1 |
+           diff_hbw_inc3_a >= (tolerance_med)*-1 |
+           diff_hbw_inc4_a >= (tolerance_med)*-1 |
+           diff_hbsc_a >= (tolerance_med)*-1 |
+           diff_hbsr_a >= (tolerance_med)*-1 |
+           diff_hbpb_a >= (tolerance_med)*-1 |
+           diff_nhbw_a >= (tolerance_med)*-1 |
+           diff_nhbnw_a >= (tolerance_med)*-1)
 
 compare_attr_filtered_bigboy <- compare_attr |>
   filter(abs(diff_hbw_inc1_a) >= tolerance_bigboy |
@@ -208,8 +257,33 @@ compare_attr_filtered_bigboy <- compare_attr |>
            abs(diff_nhbw_a) >= tolerance_bigboy |
            abs(diff_nhbnw_a) >= tolerance_bigboy)
 
+compare_attr_filtered_bigboy_pos <- compare_attr |>
+  filter(diff_hbw_inc1_a >= tolerance_bigboy |
+           diff_hbw_inc2_a >= tolerance_bigboy |
+           diff_hbw_inc3_a >= tolerance_bigboy |
+           diff_hbw_inc4_a >= tolerance_bigboy |
+           diff_hbsc_a >= tolerance_bigboy |
+           diff_hbsr_a >= tolerance_bigboy |
+           diff_hbpb_a >= tolerance_bigboy |
+           diff_nhbw_a >= tolerance_bigboy |
+           diff_nhbnw_a >= tolerance_bigboy)
+
+compare_attr_filtered_bigboy_neg <- compare_attr |>
+  filter(diff_hbw_inc1_a >= (tolerance_bigboy)*-1 |
+           diff_hbw_inc2_a >= (tolerance_bigboy)*-1 |
+           diff_hbw_inc3_a >= (tolerance_bigboy)*-1 |
+           diff_hbw_inc4_a >= (tolerance_bigboy)*-1 |
+           diff_hbsc_a >= (tolerance_bigboy)*-1 |
+           diff_hbsr_a >= (tolerance_bigboy)*-1 |
+           diff_hbpb_a >= (tolerance_bigboy)*-1 |
+           diff_nhbw_a >= (tolerance_bigboy)*-1 |
+           diff_nhbnw_a >= (tolerance_bigboy)*-1)
+
 ##########################################
 # Create map showing differences in trip attractions
+
+dif_blocks_attr <- zones |>
+  right_join(compare_attr)
 
 attr_labels <- paste0(formatC(dif_blocks_attr$diff_hbw_inc1_a*100, format = "f", digits = 2),
                       "% change in HBW trips (< $35k)<br/>",
@@ -231,6 +305,8 @@ attr_labels <- paste0(formatC(dif_blocks_attr$diff_hbw_inc1_a*100, format = "f",
                       "% change in non-home-based non-work trips") |>
   lapply(htmltools::HTML)
 
+
+
 leaflet(dif_blocks_attr) |>
   addProviderTiles(provider = "CartoDB.Positron") |>
   addPolygons(weight = 2,
@@ -240,6 +316,15 @@ leaflet(dif_blocks_attr) |>
               highlightOptions = highlightOptions(weight = 3,
                                                   fillOpacity = 0.5),
               label = attr_labels)
+
+dif_blocks_attr_small <- zones |>
+  right_join(compare_attr_filtered_small)
+
+dif_blocks_attr_med <- zones |>
+  right_join(compare_attr_filtered_med)
+
+dif_blocks_attr_bigboy <- zones |>
+  right_join(compare_attr_filtered_bigboy)
 
 ##########################################
 #  Look at base scenario for non-home-based trip productions
@@ -274,13 +359,37 @@ compare_nhb_filtered_small <- compare_nhb |>
   filter(abs(diff_nhbw_p) >= tolerance_small |
            abs(diff_nhbnw_p) >= tolerance_small)
 
+compare_nhb_filtered_small_pos <- compare_nhb |>
+  filter(diff_nhbw_p >= tolerance_small |
+           diff_nhbnw_p >= tolerance_small)
+
+compare_nhb_filtered_small_neg <- compare_nhb |>
+  filter(diff_nhbw_p >= (tolerance_small)*-1 |
+           diff_nhbnw_p >= (tolerance_small)*-1)
+
 compare_nhb_filtered_med <- compare_nhb |>
   filter(abs(diff_nhbw_p) >= tolerance_med |
            abs(diff_nhbnw_p) >= tolerance_med)
 
+compare_nhb_filtered_med_pos <- compare_nhb |>
+  filter(diff_nhbw_p >= tolerance_med |
+           diff_nhbnw_p >= tolerance_med)
+
+compare_nhb_filtered_med_neg <- compare_nhb |>
+  filter(diff_nhbw_p >= (tolerance_med)*-1 |
+           diff_nhbnw_p >= (tolerance_med)*-1)
+
 compare_nhb_filtered_bigboy <- compare_nhb |>
   filter(abs(diff_nhbw_p) >= tolerance_bigboy |
            abs(diff_nhbnw_p) >= tolerance_bigboy)
+
+compare_nhb_filtered_bigboy_pos <- compare_nhb |>
+  filter(diff_nhbw_p >= tolerance_bigboy |
+           diff_nhbnw_p >= tolerance_med)
+
+compare_nhb_filtered_bigboy_neg <- compare_nhb |>
+  filter(diff_nhbw_p >= (tolerance_bigboy)*-1 |
+           diff_nhbnw_p >= (tolerance_bigboy)*-1)
 
 ##########################################
 # Create map showing differences in non-home-based trip productions
@@ -303,3 +412,95 @@ leaflet(dif_blocks_nhb) |>
               highlightOptions = highlightOptions(weight = 3,
                                                   fillOpacity = 0.5),
               label = nhb_labels)
+
+dif_blocks_nhb_small <- zones |>
+  right_join(compare_nhb_filtered_small)
+
+leaflet(dif_blocks_nhb_small) |>
+  addProviderTiles(provider = "CartoDB.Positron") |>
+  addPolygons(weight = 2,
+              color = "forestgreen",
+              fillColor = "forestgreen",
+              fillOpacity = 0.1,
+              highlightOptions = highlightOptions(weight = 3,
+                                                  fillOpacity = 0.5),
+              label = nhb_labels)
+
+dif_blocks_nhb_med <- zones |>
+  right_join(compare_nhb_filtered_med)
+
+leaflet(dif_blocks_nhb_med) |>
+  addProviderTiles(provider = "CartoDB.Positron") |>
+  addPolygons(weight = 2,
+              color = "forestgreen",
+              fillColor = "forestgreen",
+              fillOpacity = 0.1,
+              highlightOptions = highlightOptions(weight = 3,
+                                                  fillOpacity = 0.5),
+              label = nhb_labels)
+
+dif_blocks_nhb_bigboy <- zones |>
+  right_join(compare_nhb_filtered_bigboy)
+
+leaflet(dif_blocks_nhb_bigboy) |>
+  addProviderTiles(provider = "CartoDB.Positron") |>
+  addPolygons(weight = 2,
+              color = "forestgreen",
+              fillColor = "forestgreen",
+              fillOpacity = 0.1,
+              highlightOptions = highlightOptions(weight = 3,
+                                                  fillOpacity = 0.5),
+              label = nhb_labels)
+
+#######################################
+# Write to shape files
+
+st_write(dif_blocks_nhb,
+         here("T2",
+              "dif_blocks_nhb"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_nhb_small,
+         here("T2",
+              "dif_blocks_nhb_small"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_nhb_med,
+         here("T2",
+              "dif_blocks_nhb_med"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_nhb_bigboy,
+         here("T2",
+              "dif_blocks_nhb_bigboy"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_attr_small,
+         here("T2",
+              "dif_blocks_attr_small"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_attr_med,
+         here("T2",
+              "dif_blocks_attr_med"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_attr_bigboy,
+         here("T2",
+              "dif_blocks_attr_bigboy"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_prod_small,
+         here("T2",
+              "dif_blocks_prod_small"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_prod_med,
+         here("T2",
+              "dif_blocks_prod_med"),
+         driver = "ESRI Shapefile")
+
+st_write(dif_blocks_prod_bigboy,
+         here("T2",
+              "dif_blocks_prod_bigboy"),
+         driver = "ESRI Shapefile")
