@@ -191,28 +191,6 @@ compare_attr_filtered_small <- compare_attr |>
            abs(diff_nhbw_a) >= tolerance_small |
            abs(diff_nhbnw_a) >= tolerance_small)
 
-compare_attr_filtered_small_pos <- compare_attr |>
-  filter(diff_hbw_inc1_a >= tolerance_small |
-           diff_hbw_inc2_a >= tolerance_small |
-           diff_hbw_inc3_a >= tolerance_small |
-           diff_hbw_inc4_a >= tolerance_small |
-           diff_hbsc_a >= tolerance_small |
-           diff_hbsr_a >= tolerance_small |
-           diff_hbpb_a >= tolerance_small |
-           diff_nhbw_a >= tolerance_small |
-           diff_nhbnw_a >= tolerance_small)
-
-compare_attr_filtered_small_neg <- compare_attr |>
-  filter(diff_hbw_inc1_a >= (tolerance_small)*-1 |
-           diff_hbw_inc2_a >= (tolerance_small)*-1 |
-           diff_hbw_inc3_a >= (tolerance_small)*-1 |
-           diff_hbw_inc4_a >= (tolerance_small)*-1 |
-           diff_hbsc_a >= (tolerance_small)*-1 |
-           diff_hbsr_a >= (tolerance_small)*-1 |
-           diff_hbpb_a >= (tolerance_small)*-1 |
-           diff_nhbw_a >= (tolerance_small)*-1 |
-           diff_nhbnw_a >= (tolerance_small)*-1)
-
 compare_attr_filtered_med <- compare_attr |>
   filter(abs(diff_hbw_inc1_a) >= tolerance_med |
            abs(diff_hbw_inc2_a) >= tolerance_med |
@@ -224,28 +202,6 @@ compare_attr_filtered_med <- compare_attr |>
            abs(diff_nhbw_a) >= tolerance_med |
            abs(diff_nhbnw_a) >= tolerance_med)
 
-compare_attr_filtered_med_pos <- compare_attr |>
-  filter(diff_hbw_inc1_a >= tolerance_med |
-           diff_hbw_inc2_a >= tolerance_med |
-           diff_hbw_inc3_a >= tolerance_med |
-           diff_hbw_inc4_a >= tolerance_med |
-           diff_hbsc_a >= tolerance_med |
-           diff_hbsr_a >= tolerance_med |
-           diff_hbpb_a >= tolerance_med |
-           diff_nhbw_a >= tolerance_med |
-           diff_nhbnw_a >= tolerance_med)
-
-compare_attr_filtered_med_neg <- compare_attr |>
-  filter(diff_hbw_inc1_a >= (tolerance_med)*-1 |
-           diff_hbw_inc2_a >= (tolerance_med)*-1 |
-           diff_hbw_inc3_a >= (tolerance_med)*-1 |
-           diff_hbw_inc4_a >= (tolerance_med)*-1 |
-           diff_hbsc_a >= (tolerance_med)*-1 |
-           diff_hbsr_a >= (tolerance_med)*-1 |
-           diff_hbpb_a >= (tolerance_med)*-1 |
-           diff_nhbw_a >= (tolerance_med)*-1 |
-           diff_nhbnw_a >= (tolerance_med)*-1)
-
 compare_attr_filtered_bigboy <- compare_attr |>
   filter(abs(diff_hbw_inc1_a) >= tolerance_bigboy |
            abs(diff_hbw_inc2_a) >= tolerance_bigboy |
@@ -256,28 +212,6 @@ compare_attr_filtered_bigboy <- compare_attr |>
            abs(diff_hbpb_a) >= tolerance_bigboy |
            abs(diff_nhbw_a) >= tolerance_bigboy |
            abs(diff_nhbnw_a) >= tolerance_bigboy)
-
-compare_attr_filtered_bigboy_pos <- compare_attr |>
-  filter(diff_hbw_inc1_a >= tolerance_bigboy |
-           diff_hbw_inc2_a >= tolerance_bigboy |
-           diff_hbw_inc3_a >= tolerance_bigboy |
-           diff_hbw_inc4_a >= tolerance_bigboy |
-           diff_hbsc_a >= tolerance_bigboy |
-           diff_hbsr_a >= tolerance_bigboy |
-           diff_hbpb_a >= tolerance_bigboy |
-           diff_nhbw_a >= tolerance_bigboy |
-           diff_nhbnw_a >= tolerance_bigboy)
-
-compare_attr_filtered_bigboy_neg <- compare_attr |>
-  filter(diff_hbw_inc1_a >= (tolerance_bigboy)*-1 |
-           diff_hbw_inc2_a >= (tolerance_bigboy)*-1 |
-           diff_hbw_inc3_a >= (tolerance_bigboy)*-1 |
-           diff_hbw_inc4_a >= (tolerance_bigboy)*-1 |
-           diff_hbsc_a >= (tolerance_bigboy)*-1 |
-           diff_hbsr_a >= (tolerance_bigboy)*-1 |
-           diff_hbpb_a >= (tolerance_bigboy)*-1 |
-           diff_nhbw_a >= (tolerance_bigboy)*-1 |
-           diff_nhbnw_a >= (tolerance_bigboy)*-1)
 
 ##########################################
 # Create map showing differences in trip attractions
@@ -359,37 +293,13 @@ compare_nhb_filtered_small <- compare_nhb |>
   filter(abs(diff_nhbw_p) >= tolerance_small |
            abs(diff_nhbnw_p) >= tolerance_small)
 
-compare_nhb_filtered_small_pos <- compare_nhb |>
-  filter(diff_nhbw_p >= tolerance_small |
-           diff_nhbnw_p >= tolerance_small)
-
-compare_nhb_filtered_small_neg <- compare_nhb |>
-  filter(diff_nhbw_p >= (tolerance_small)*-1 |
-           diff_nhbnw_p >= (tolerance_small)*-1)
-
 compare_nhb_filtered_med <- compare_nhb |>
   filter(abs(diff_nhbw_p) >= tolerance_med |
            abs(diff_nhbnw_p) >= tolerance_med)
 
-compare_nhb_filtered_med_pos <- compare_nhb |>
-  filter(diff_nhbw_p >= tolerance_med |
-           diff_nhbnw_p >= tolerance_med)
-
-compare_nhb_filtered_med_neg <- compare_nhb |>
-  filter(diff_nhbw_p >= (tolerance_med)*-1 |
-           diff_nhbnw_p >= (tolerance_med)*-1)
-
 compare_nhb_filtered_bigboy <- compare_nhb |>
   filter(abs(diff_nhbw_p) >= tolerance_bigboy |
            abs(diff_nhbnw_p) >= tolerance_bigboy)
-
-compare_nhb_filtered_bigboy_pos <- compare_nhb |>
-  filter(diff_nhbw_p >= tolerance_bigboy |
-           diff_nhbnw_p >= tolerance_med)
-
-compare_nhb_filtered_bigboy_neg <- compare_nhb |>
-  filter(diff_nhbw_p >= (tolerance_bigboy)*-1 |
-           diff_nhbnw_p >= (tolerance_bigboy)*-1)
 
 ##########################################
 # Create map showing differences in non-home-based trip productions
