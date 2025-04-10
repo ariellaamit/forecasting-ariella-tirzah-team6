@@ -267,6 +267,20 @@ base_pa_towns <- base_pa |>
   filter(!is.na(origin_town),
          !is.na(destin_town))
 
+recession_pa_towns <- recession_pa |>
+  rename(taz_id = origin) |>
+  left_join(TAZ_town_codes) |>
+  rename(origin_town = town,
+         origin = taz_id) |>
+  rename(taz_id = destination) |>
+  left_join(TAZ_town_codes) |>
+  rename(destin_town = town,
+         destination = taz_id) |>
+  group_by(origin_town, destin_town) |>
+  summarize(trips = sum(total_hh_trips)) |>
+  filter(!is.na(origin_town),
+         !is.na(destin_town))
+
 fewer_towns <- c("CAMBRIDGE",
                  "BOSTON",
                  "FRAMINGHAM",
@@ -284,6 +298,13 @@ base_fewer_pa_towns <- base_pa_towns |>
          destin_town %in% fewer_towns)
 
 desire_fewer_base_towns <- make_desire_lines(od_df = base_fewer_pa_towns,
+                                             points = boston_town_pts,
+                                             origin_column = "origin_town",
+                                             destination_column = "destin_town",
+                                             trips_column = "trips",
+                                             taz_id_column = "town")
+
+desire_fewer_recession_towns <- make_desire_lines(od_df = recession_fewer_pa_towns,
                                              points = boston_town_pts,
                                              origin_column = "origin_town",
                                              destination_column = "destin_town",
@@ -332,9 +353,6 @@ ggplot(desire_recession_mpos) +
           alpha = 0.5,
           color = "olivedrab3") +
   theme_void()
-
-
-
 
 #### test
 
@@ -544,20 +562,6 @@ desire_line_change <- changed_TAZ_points |>
   select(difference, origin_taz, destin_taz) |>
   st_cast("LINESTRING")
 
-base_map <- get_tiles(desire_line_change,
-                      provider = "CartoDB.DarkMatter",
-                      zoom = 12,
-                      crop = TRUE)
-
-ggplot(desire_line_change) + 
-  geom_spatraster_rgb(data = base_map) +
-  geom_sf(aes(color = difference)) +
-  scale_color_gradient2(low = muted("red"), 
-                        mid = "white",
-                        high = muted("blue"),
-                        midpoint = 0) +
-  theme_void()
-
 desire_line_gain <- desire_line_change |>
   filter(difference > 0)
 
@@ -571,7 +575,7 @@ base_map <- get_tiles(desire_line_change,
                       crop = TRUE)
 
 ggplot() + 
-  geom_spatraster_rgb(data = base_map) +
+  geom_spatraster_rgb(data = recession_map) +
   geom_sf(data = desire_line_loss,
           alpha = 0.2,
           aes(linewidth = difference,
@@ -582,44 +586,91 @@ ggplot() +
               color = "Increased demand")) +
   scale_linewidth(name = "Magnitude of difference\n(number of trips)") +
   scale_color_manual(name = "Direction of difference",
-                     values = c(muted("blue"), muted("red"))) +
+                     values = c("olivedrab", "tomato")) +
   guides(color = guide_legend(override.aes = list(linewidth = 2,
                                                   alpha = 0.5))) +
   theme_void()
 
-gain_map <- ggplot() + 
-  geom_spatraster_rgb(data = base_map) +
+ggplot() + 
+  geom_spatraster_rgb(data = recession_map) +
   geom_sf(data = desire_line_gain,
           alpha = 0.15,
-          color = "orange",
+          color = "olivedrab4",
           aes(linewidth = difference)) +
   scale_linewidth(name = "Magnitude of difference",
-                  limits = c(0,500),
-                  breaks = breaks <- seq(100, 500, by = 100),
+                  limits = c(0,2500),
+                  breaks = breaks <- seq(0, 2500, by = 500),
                   labels = paste0(breaks, " trips")) +
   theme_void() 
 
-loss_map <- ggplot() + 
-  geom_spatraster_rgb(data = base_map) +
+ggplot() + 
+  geom_spatraster_rgb(data = recession_map) +
   geom_sf(data = desire_line_loss,
           alpha = 0.15,
-          color = "orange",
+          color = "tomato",
           aes(linewidth = difference)) +
   scale_linewidth(name = "Magnitude of difference",
-                  limits = c(0,500),
-                  breaks = breaks <- seq(100, 500, by = 100),
+                  limits = c(0, 2000),
+                  breaks = breaks <- seq(0, 2000, by = 500),
                   labels = paste0(breaks, " trips")) +
-  theme_void() 
+  theme_void()
 
-legend <- get_legend(loss_map)
+## biggest changes
 
-plot_grid(gain_map + theme(legend.position = "none"), 
-          loss_map + theme(legend.position = "none"), 
-          legend,
-          nrow = 1,
-          labels = c("Trip increases",
-                     "Trip decreases",
-                     ""),
-          label_size = 10,
-          label_y = 0.8,
-          label_x = -0.12)
+most_gained_a <- comparison_summary$taz_id[
+  comparison_summary$gain_a == max(comparison_summary$gain_a)]
+
+most_gained_p <- comparison_summary$taz_id[
+  comparison_summary$gain_p == max(comparison_summary$gain_p)]
+
+most_lost_a <- comparison_summary$taz_id[
+  comparison_summary$lost_a == max(comparison_summary$lost_a)]
+
+most_lost_p <- comparison_summary$taz_id[
+  comparison_summary$lost_p == max(comparison_summary$lost_p)]
+
+tibble(Change = c("Greatest production gain",
+                  "Greatest attraction gain",
+                  "Greatest production loss",
+                  "Greatest attraction loss"),
+       TAZ = c(most_gained_p,
+               most_gained_a,
+               most_lost_p,
+               most_lost_a),
+       Magnitude = c(max(comparison_summary$gain_p),
+                     max(comparison_summary$gain_a),
+                     max(comparison_summary$lost_p),
+                     max(comparison_summary$lost_a))) |>
+  kable(digits = 1)
+
+compare_taz_1584 <- comparison |>
+  filter(origin == 1584 | destination == 1584) |>
+  mutate(taz_id = ifelse(origin == 1584, destination, origin)) |>
+  group_by(taz_id) |>
+  summarise(difference = sum(difference)) 
+
+taz_1584_zones <- changed_TAZs |>
+  right_join(compare_taz_1584) |>
+  select(difference)
+
+base_map <- get_tiles(taz_1584_zones,
+                      provider = "CartoDB.Positron",
+                      zoom = 12,
+                      crop = TRUE)
+
+ggplot(taz_1584_zones) +
+  geom_spatraster_rgb(data = base_map) +
+  geom_sf(color = "gray",
+          aes(fill = difference)) +
+  scale_fill_gradient2(low = muted("tomato"),
+                       mid = "white",
+                       high = muted("olivedrab"),
+                       midpoint = 0) +
+  theme_void()
+
+###### export changed tazs to shapefile
+
+st_write(changed_TAZs,
+         here("T3",
+              "changed_tazs"),
+         driver = "ESRI Shapefile")
