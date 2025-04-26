@@ -127,7 +127,7 @@ big_stop_diffs <- stop_diff |>
 
 base_map <- get_tiles(big_stop_diffs,
                       provider = "CartoDB.Positron",
-                      zoom = 13,
+                      zoom = 12,
                       crop = TRUE)
 
 ggplot(big_stop_diffs) +
